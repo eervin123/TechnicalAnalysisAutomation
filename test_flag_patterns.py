@@ -1,10 +1,11 @@
+#%% Imports
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import mplfinance as mpf
 from flags_pennants import find_flags_pennants_pips, find_flags_pennants_trendline
     
-
+#%% Load data
 data = pd.read_csv('BTCUSDT3600.csv')
 data['date'] = data['date'].astype('datetime64[s]')
 data = data.set_index('date')
@@ -144,7 +145,7 @@ for order in orders:
         bear_pennant_wr.append(np.nan)
         bear_pennant_total_ret.append(0)
     
-
+# %% Create signals dataframe
 results_df = pd.DataFrame(index=orders)
 results_df['bull_flag_count'] = bull_flag_count
 results_df['bull_flag_avg'] = bull_flag_avg
@@ -166,7 +167,7 @@ results_df['bear_pennant_avg'] = bear_pennant_avg
 results_df['bear_pennant_wr'] = bear_pennant_wr
 results_df['bear_pennant_total'] = bear_pennant_total_ret
 
-# Plot bull flag results
+#%% Plot bull flag results
 plt.style.use('dark_background')
 fig, ax = plt.subplots(2, 2)
 fig.suptitle("Bull Flag Performance", fontsize=20)
@@ -261,3 +262,5 @@ ax[1,1].set_xlabel('Order Parameter')
 ax[1,1].set_ylabel('Win Rate Percentage')
 plt.show()
 
+
+# %%

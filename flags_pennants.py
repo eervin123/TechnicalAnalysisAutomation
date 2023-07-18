@@ -6,7 +6,7 @@ from perceptually_important import find_pips
 from rolling_window import rw_top, rw_bottom
 from trendline_automation import fit_trendlines_single
 from dataclasses import dataclass
-
+from typing import List
 @dataclass
 class FlagPattern:
     base_x: int         # Start of the trend index, base of pole
@@ -401,6 +401,24 @@ def plot_flag(candle_data: pd.DataFrame, pattern: FlagPattern, pad=2):
 
     mpf.plot(dat, alines=dict(alines=[pole_line, upper_line, lower_line], colors=['w', 'b', 'b']), type='candle', style='charles', ax=ax)
     plt.show()
+    
+def add_flag_signals(df: pd.DataFrame, bull_flags: List[FlagPattern], bear_flags: List[FlagPattern]) -> pd.DataFrame:
+    bull_flag_signals = [False] * len(df)
+    bear_flag_signals = [False] * len(df)
+    flag_widths = [np.nan] * len(df)
+    for pattern in bull_flags:
+        bull_flag_signals[pattern.conf_x] = True
+        flag_widths[pattern.conf_x] = pattern.flag_width
+    for pattern in bear_flags:
+        bear_flag_signals[pattern.conf_x] = True
+        flag_widths[pattern.conf_x] = pattern.flag_width
+    df['bull_flag'] = bull_flag_signals
+    df['bear_flag'] = bear_flag_signals
+    df['flag_width'] = flag_widths
+    return df
+
+
+
 
 if __name__ == '__main__':
     data = pd.read_csv('BTCUSDT3600.csv')

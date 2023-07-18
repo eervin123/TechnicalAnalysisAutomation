@@ -265,7 +265,7 @@ if __name__ == '__main__':
     '''
     
     '''
-    # Test several sigma vvalues
+    # Test several sigma values
     data['r'] = np.log(data['close']).diff().shift(-1)
     plt.style.use('dark_background')
     for sigma in [0.01, 0.015, 0.02, 0.025, 0.03, 0.035, 0.04]: 

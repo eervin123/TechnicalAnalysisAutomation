@@ -135,6 +135,7 @@ class PIPPatternMiner:
             self._assign_clusters()
             perm_martin = self._get_total_performance()
             self._perm_martins.append(perm_martin)
+            print(f"Permutation {rep} Martin: {perm_martin}")
 
 
     def _find_unique_patterns(self):
@@ -253,13 +254,16 @@ if __name__ == '__main__':
     data = np.log(data)
 
     plt.style.use('dark_background')
-
+    n_pips = 5
     data = data[data.index < '01-01-2020']
     arr = data['close'].to_numpy()
-    pip_miner = PIPPatternMiner(n_pips=5, lookback=24, hold_period=6)
+    pip_miner = PIPPatternMiner(n_pips=n_pips, lookback=24, hold_period=6)
     pip_miner.train(arr, n_reps=-1)
+    actual_martin = pip_miner.get_fit_martin()
+    for i in range(n_pips):
+        pip_miner.plot_cluster_examples(data, i)
 
-    '''
+    
     # Monte Carlo test, takes about an hour..
     pip_miner.train(arr, n_reps=100)
     
@@ -271,7 +275,7 @@ if __name__ == '__main__':
     ax.set_xlabel("Martin Ratio")
     ax.set_title("Permutation's Martin Ratio BTC-USDT 1H 2018-2020")
     ax.axvline(actual_martin, color='red')
-    '''
+    
 
 
 

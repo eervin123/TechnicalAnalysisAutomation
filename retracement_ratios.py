@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import mplfinance as mpf
-import scipy
+import scipy.stats
 import math
 import pandas_ta as ta
 from directional_change import directional_change, get_extremes
