@@ -1,3 +1,4 @@
+#%% Imports
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,7 +7,7 @@ import scipy
 import math
 import pandas_ta as ta
 
-
+#%% Functions
 def find_levels( 
         price: np.array, atr: float, # Log closing price, and log atr 
         first_w: float = 0.1, 
@@ -135,3 +136,5 @@ if __name__ == '__main__':
     long_trades, short_trades = get_trades_from_signal(data, data['sr_signal'].to_numpy())
 
 
+
+# %%
